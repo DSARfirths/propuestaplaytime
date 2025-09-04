@@ -13,6 +13,33 @@
 
     <main class="container mx-auto px-6 py-12">
         
+        <div id="progress-bar" class="flex items-start justify-center text-center mb-16">
+            <div class="progress-step" data-step="1">
+                <div class="progress-circle">1</div>
+                <p class="progress-label">Inicio</p>
+            </div>
+            <div class="progress-connector"></div>
+            <div class="progress-step" data-step="2">
+                <div class="progress-circle">2</div>
+                <p class="progress-label">Fase 1</p>
+            </div>
+            <div class="progress-connector"></div>
+            <div class="progress-step" data-step="3">
+                <div class="progress-circle">3</div>
+                <p class="progress-label">Fase 2</p>
+            </div>
+            <div class="progress-connector"></div>
+            <div class="progress-step" data-step="4">
+                <div class="progress-circle">4</div>
+                <p class="progress-label">Fase 3</p>
+            </div>
+            <div class="progress-connector"></div>
+            <div class="progress-step" data-step="5">
+                <div class="progress-circle">5</div>
+                <p class="progress-label">Resumen</p>
+            </div>
+        </div>
+
         <section id="step-1" class="step active-step text-center">
             <h1 class="font-gamer text-3xl md:text-5xl uppercase neon-text">Propuesta Evolutiva</h1>
             <p class="mt-4 text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">Un plan por fases para lanzar su experiencia QR, diseñado para empezar <span class="font-bold text-green-400">mañana mismo</span>.</p>
@@ -27,7 +54,7 @@
             <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 1: Lanzamiento Piloto</h2>
             <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">La forma más rápida y segura de validar la experiencia. Implementamos el sistema en 4 mesas clave para medir resultados y obtener feedback real. <strong class="text-white">Podemos empezar mañana.</strong></p>
             <div class="max-w-4xl mx-auto">
-                 <label class="plan-card p-8 cursor-pointer is-selected">
+                 <label class="plan-card p-8 cursor-pointer selected">
                     <input type="radio" name="phase1" class="hidden" value="piloto" data-price="1200" checked>
                     <h3 class="font-gamer text-xl uppercase text-yellow-400">Misión: Piloto (4 Mesas)</h3>
                     <p class="text-gray-400 mb-6">Inversión para esta fase:</p>
@@ -59,16 +86,40 @@
                      <p class="text-gray-400 mb-6">Integración Directa con POS</p>
                     <p class="font-bold text-4xl mb-6 text-green-400">+ S/ 2,800</p>
                     <p class="text-sm text-gray-500 mb-4">(Total de mi trabajo: S/ 4,000) <br> <span class="text-yellow-400 font-bold">+ S/ 1,500 a BrainPOS</span></p>
-                    <p class="text-sm">La solución definitiva para una operación 100% automatizada y sin errores.</p>
+                    <p class="text-sm">La solución definitiva para una operación 100% automatizada. <strong class="text-white">Desbloquea la Fase 3.</strong></p>
                 </label>
             </div>
         </section>
+        
+        <section id="step-4" class="step">
+             <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 3: Módulo Delivery (Opcional)</h2>
+             <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">Al elegir la integración con POS, desbloquean la capacidad de lanzar su propio canal de delivery, eliminando comisiones de terceros y fidelizando a sus clientes.</p>
+             <div class="max-w-4xl mx-auto">
+                <label for="addon-delivery" class="addon-card p-8 flex items-center justify-between cursor-pointer">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="addon-delivery" class="custom-checkbox" data-price="2000" data-monthly-price="30">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg text-white">Activar Módulo de Delivery Propio</h4>
+                            <ul class="text-sm text-gray-400 list-disc list-inside mt-2">
+                                <li>Cero comisiones por venta.</li>
+                                <li>Base de datos de clientes propia.</li>
+                                <li>Experiencia de marca unificada.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-lg text-green-400">+ S/ 2,000</p>
+                        <p class="text-sm text-gray-500">pago único</p>
+                    </div>
+                </label>
+             </div>
+        </section>
 
-        <section id="step-4" class="step text-center">
+        <section id="step-5" class="step text-center">
             <h2 class="font-gamer text-2xl md:text-3xl mb-12 text-purple-400">Servicio y Soporte Mensual</h2>
              <div class="card p-8 max-w-3xl mx-auto mb-12">
                  <h3 class="font-gamer text-xl uppercase text-green-400">Servicio Gestionado</h3>
-                 <p class="font-bold text-5xl my-4">S/ 150 <span class="text-2xl text-gray-400">/ mes</span></p>
+                 <p class="font-bold text-5xl my-4">S/ 150 <span id="monthly-base-text" class="text-2xl text-gray-400">/ mes</span></p>
                  <p class="text-gray-400">Este servicio asegura la tranquilidad total. Incluye:</p>
                  <ul class="text-left space-y-2 text-sm mt-4 list-disc list-inside">
                      <li>Hosting, seguridad y mantenimiento proactivo.</li>
@@ -100,9 +151,9 @@
                 <p class="text-gray-400 text-sm">INVERSIÓN TOTAL (EST.)</p>
                 <p id="total-proyecto" class="font-bold text-2xl text-white">S/ 3,000.00</p>
             </div>
-             <div id="eta-container">
-                 <p class="text-gray-400 text-sm">INICIO DEL PROYECTO</p>
-                <p id="total-eta" class="font-bold text-2xl text-white">Mañana</p>
+             <div>
+                <p class="text-gray-400 text-sm">SERVICIO MENSUAL (EST.)</p>
+                <p id="total-mensual" class="font-bold text-2xl text-white">S/ 150.00</p>
             </div>
         </div>
     </div>
