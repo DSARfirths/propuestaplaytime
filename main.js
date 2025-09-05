@@ -343,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lógica para colapsar/expandir el carrito en móvil
     const summaryCartHeader = document.getElementById('summary-cart-header');
     summaryCartHeader.addEventListener('click', () => {
+        playSound(clickSound);
         summaryCart.classList.toggle('expanded');
     });
 
