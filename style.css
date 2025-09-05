@@ -60,6 +60,16 @@ main.container {
     border-color: #a855f7;
     color: white;
 }
+.btn-primary.disabled, .btn-secondary.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none; /* Crucial para deshabilitar el click en etiquetas <a> */
+    box-shadow: none;
+}
+.btn-primary.disabled:hover {
+    background-color: #a855f7; /* Evita el cambio de color en hover */
+    transform: none;
+}
 .btn-secondary:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -314,6 +324,26 @@ main.container {
     align-items: center;
 }
 
+/* --- Estilos para el contenedor de Términos con scroll --- */
+#next-steps-summary {
+    max-height: 250px; /* Altura máxima antes de que aparezca el scroll */
+    overflow-y: auto;
+    /* Estilos para la barra de scroll */
+    scrollbar-width: thin;
+    scrollbar-color: #a855f7 #374151;
+}
+/* Para navegadores Webkit (Chrome, Safari) */
+#next-steps-summary::-webkit-scrollbar {
+    width: 8px;
+}
+#next-steps-summary::-webkit-scrollbar-track {
+    background: #374151;
+}
+#next-steps-summary::-webkit-scrollbar-thumb {
+    background-color: #a855f7;
+    border-radius: 10px;
+    border: 2px solid #374151;
+}
 /* --- Estilos para el Toggle Switch de Financiamiento --- */
 .toggle-bg::after {
     content: '';
@@ -328,3 +358,34 @@ main.container {
 }
 input:checked + .toggle-bg { background-color: #34d399; /* green-400 */ }
 input:checked + .toggle-bg::after { transform: translateX(100%); transform: translateX(calc(3.5rem - 28px - 4px)); /* w-14 - w-7 - p-1 */ }
+
+/* --- Estilos para Desplegable de Características en Fase 2 --- */
+.details-toggle-container {
+    border-top: 1px solid #374151;
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+.details-toggle-btn {
+    background: none;
+    border: none;
+    color: #a0aec0;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+.details-toggle-btn:hover {
+    color: white;
+}
+.details-toggle-btn .arrow {
+    float: right;
+    transition: transform 0.3s ease;
+}
+.plan-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    padding-left: 0.5rem;
+}

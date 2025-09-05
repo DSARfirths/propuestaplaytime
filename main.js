@@ -32,6 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateNavigation();
         updateSummaryCartVisibility();
         updateProgressBar();
+
+        // Si vamos al paso 5, deshabilitamos el botón de aprobar inicialmente
+        if (stepNumber === 6) {
+            approveBtn.classList.add('disabled');
+            nextStepsEl.scrollTop = 0; // Reinicia el scroll al principio
+        }
     };
 
     const updateNavigation = () => {
@@ -61,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let nextStep = parseInt(btn.dataset.next) || currentStep + 1;
             // Lógica condicional para saltar la Fase 3 si no se elige una opción con integración POS
             const phase2UnlocksAddons = selection.phase2 && (selection.phase2.id === 'profesional' || selection.phase2.id === 'legendaria');
-            if (currentStep === 3 && !phase2UnlocksAddons) {
+            if (currentStep === 3 && !phase2UnlocksAddons) { // Salta de Fase 2 a Servicio
                 nextStep = 5; // Saltar a la última página
             }
             goToStep(nextStep);
@@ -73,8 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             let prevStep = currentStep - 1;
             const phase2UnlocksAddons = selection.phase2 && (selection.phase2.id === 'profesional' || selection.phase2.id === 'legendaria');
-            if (currentStep === 5 && !phase2UnlocksAddons) {
-                prevStep = 3;
+            if (currentStep === 5 && !phase2UnlocksAddons) { // Vuelve de Servicio a Fase 2
+                prevStep = 3; // Saltar hacia atrás a la Fase 2
             }
             goToStep(prevStep);
         });
@@ -162,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         totalProjectCost += addonsCost;
         monthlyCost += addonsMonthlyCost;
+        monthlyCost += monthlyFinancedPayment;
 
         // 4. Actualizar UI
         animateUpdate(totalInicialEl, formatCurrency(initialPayment));
@@ -318,6 +325,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const summaryCartHeader = document.getElementById('summary-cart-header');
     summaryCartHeader.addEventListener('click', () => {
         summaryCart.classList.toggle('expanded');
+    });
+
+    // Lógica para habilitar el botón de aprobación al hacer scroll en los términos
+    nextStepsEl.addEventListener('scroll', () => {
+        // Se da un pequeño margen de 1px para evitar problemas de redondeo en algunos navegadores
+        const isScrolledToEnd = nextStepsEl.scrollHeight - nextStepsEl.scrollTop <= nextStepsEl.clientHeight + 1;
+        if (isScrolledToEnd) {
+            approveBtn.classList.remove('disabled');
+        }
+    });
+
+    // Lógica para desplegables de características en Fase 2
+    document.querySelectorAll('.details-toggle-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault(); // Evita que el click en el botón active el radio de la tarjeta
+            const details = button.nextElementSibling;
+            const arrow = button.querySelector('.arrow');
+            if (details.style.maxHeight) {
+                details.style.maxHeight = null;
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                details.style.maxHeight = details.scrollHeight + "px";
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        });
     });
 
     goToStep(1);
