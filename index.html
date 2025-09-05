@@ -222,9 +222,32 @@
                         WhatsApp y yo actualizo el menú por ustedes (hasta 10 cambios mayores al mes).</li>
                 </ul>
             </div>
+
+            <div class="card p-6 max-w-4xl mx-auto my-8">
+                <label for="financing-toggle" class="flex items-center justify-between cursor-pointer">
+                    <div>
+                        <h4 class="font-gamer text-lg text-yellow-400">¿Inversión Inicial muy alta?</h4>
+                        <p class="text-sm text-gray-400">Activa el Plan de Financiamiento a 12 meses.</p>
+                    </div>
+                    <div class="relative">
+                        <input type="checkbox" id="financing-toggle" class="sr-only">
+                        <div class="toggle-bg bg-gray-700 border-2 border-gray-600 h-8 w-14 rounded-full"></div>
+                    </div>
+                </label>
+                <p id="financing-explanation" class="text-xs text-gray-500 mt-3" style="display: none;">
+                    ¡Activado! Los costos de Fase 2 y 3 se han convertido en 12 cuotas mensuales. Esto aumenta el valor total del proyecto en un 20% pero libera tu capital inicial.
+                </p>
+            </div>
+
             <h3 class="font-gamer text-xl text-center mb-4 text-purple-400">Tu Plan de Lanzamiento</h3>
             <div id="final-summary" class="card p-8 max-w-4xl mx-auto text-left space-y-4 mb-12">
             </div>
+
+            <h3 class="font-gamer text-xl text-center mt-12 mb-4 text-yellow-400">Próximos Pasos y Términos</h3>
+            <div id="next-steps-summary" class="card p-6 max-w-4xl mx-auto text-left text-sm space-y-3 mb-12">
+                <!-- El contenido se generará dinámicamente aquí -->
+            </div>
+
             <div class="step-navigation">
                 <button class="btn-secondary prev-btn">◀ Anterior</button>
                 <a href="mailto:tucorreo@example.com?subject=Aceptación de Propuesta - Play Time-Resto Gamer"
@@ -236,18 +259,26 @@
     </main>
 
     <div id="summary-cart" class="summary-cart">
-        <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between text-center sm:text-left">
-            <div class="mb-2 sm:mb-0">
-                <p class="text-gray-400 text-sm">FASE 1 - PAGO INICIAL</p>
-                <p id="total-inicial" class="font-bold text-2xl text-green-400">S/ 600.00</p>
+        <div class="container mx-auto px-4">
+            <div id="summary-cart-header" class="flex justify-between items-center cursor-pointer md:cursor-auto">
+                <h4 class="font-gamer text-sm uppercase text-purple-400 md:hidden">Resumen de Misión</h4>
+                <span id="summary-cart-toggle" class="text-2xl md:hidden transition-transform transform">▼</span>
             </div>
-            <div class="mb-2 sm:mb-0">
-                <p class="text-gray-400 text-sm">INVERSIÓN TOTAL ACUMULADA</p>
-                <p id="total-proyecto" class="font-bold text-2xl text-white">S/ 3,000.00</p>
-            </div>
-            <div class="mb-2 sm:mb-0">
-                <p class="text-gray-400 text-sm">SERVICIO MENSUAL</p>
-                <p id="total-mensual" class="font-bold text-2xl text-white">S/ 150.00</p>
+            <div id="summary-cart-content" class="overflow-hidden">
+                <div class="pt-2 flex flex-col md:flex-row items-center justify-between text-center md:text-left">
+                    <div class="mb-2 md:mb-0">
+                        <p class="text-gray-400 text-sm">FASE 1 - PAGO INICIAL</p>
+                        <p id="total-inicial" class="font-bold text-2xl text-green-400">S/ 600.00</p>
+                    </div>
+                    <div class="mb-2 md:mb-0">
+                        <p class="text-gray-400 text-sm">INVERSIÓN TOTAL ACUMULADA</p>
+                        <p id="total-proyecto" class="font-bold text-2xl text-white">S/ 3,000.00</p>
+                    </div>
+                    <div class="mb-2 md:mb-0">
+                        <p class="text-gray-400 text-sm">SERVICIO MENSUAL</p>
+                        <p id="total-mensual" class="font-bold text-2xl text-white">S/ 150.00</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

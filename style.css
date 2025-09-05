@@ -126,7 +126,7 @@ main.container {
     background-color: rgba(17, 24, 39, 0.8);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(168, 85, 247, 0.5);
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
     padding: 1rem;
     z-index: 50;
     transition: all 0.3s ease;
@@ -210,9 +210,22 @@ main.container {
         display: none;
     }
 
-    /* Ajustar el carrito flotante para que el contenido se apile */
-    .summary-cart .container {
-        gap: 0.5rem; /* Espacio entre elementos apilados */
+    /* --- Estilos para Carrito Colapsable en Móvil --- */
+    .summary-cart {
+        padding: 0.75rem;
+    }
+
+    #summary-cart-content {
+        max-height: 0;
+        transition: max-height 0.3s ease-out;
+    }
+
+    .summary-cart.expanded #summary-cart-content {
+        max-height: 300px; /* Altura suficiente para el contenido */
+    }
+
+    .summary-cart.expanded #summary-cart-toggle {
+        transform: rotate(180deg);
     }
 
     .summary-cart p {
@@ -223,7 +236,9 @@ main.container {
     }
 
     /* Ajustar el padding inferior para el carrito en móvil */
-    main.container { padding-bottom: 12rem; }
+    main.container {
+        padding-bottom: 8rem; /* Ajustado para el carrito colapsado */
+    }
 }
 
 /* --- Animación para actualización de valores --- */
@@ -298,3 +313,18 @@ main.container {
     display: flex; /* Para alinear el pseudoelemento y el texto */
     align-items: center;
 }
+
+/* --- Estilos para el Toggle Switch de Financiamiento --- */
+.toggle-bg::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: white;
+    height: 28px; /* h-7 */
+    width: 28px; /* w-7 */
+    border-radius: 9999px;
+    transition: 0.3s;
+}
+input:checked + .toggle-bg { background-color: #34d399; /* green-400 */ }
+input:checked + .toggle-bg::after { transform: translateX(100%); transform: translateX(calc(3.5rem - 28px - 4px)); /* w-14 - w-7 - p-1 */ }

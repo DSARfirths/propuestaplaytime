@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selection = {
         phase1: { price: 1200, payment: '2cuotas' },
         phase2: null,
-        delivery: false,
+        isFinanced: false,
     };
 
     // --- ELEMENTOS DEL DOM ---
@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const deliveryStep = document.getElementById('step-4');
     const approveBtn = document.getElementById('approve-btn');
     const progressSteps = document.querySelectorAll('.progress-step');
+    const financingToggle = document.getElementById('financing-toggle');
+    const nextStepsEl = document.getElementById('next-steps-summary');
+    const financingExplanation = document.getElementById('financing-explanation');
 
     // --- LÓGICA DE NAVEGACIÓN ---
     let currentStep = 1;
@@ -98,18 +101,26 @@ document.addEventListener('DOMContentLoaded', () => {
         selection.phase1.payment = paymentPhase1;
         const initialPayment = paymentPhase1 === '2cuotas' ? selection.phase1.price / 2 : selection.phase1.price;
 
+        // Verificamos el estado del financiamiento
+        selection.isFinanced = financingToggle.checked;
+        financingExplanation.style.display = selection.isFinanced ? 'block' : 'none';
+
         // 2. Costo del proyecto (Fase 1 + Fase 2)
         const phase2Input = document.querySelector('input[name="phase2"]:checked');
         let totalProjectCost = selection.phase1.price;
         let monthlyCost = 150; // Base
         let addonsCost = 0; // Costo de addons
         let addonsMonthlyCost = 0; // Costo mensual de addons
+        let financedAmount = 0; // Monto de Fase 2 y 3 que se financiará
+        let monthlyFinancedPayment = 0;
 
         // Reseteamos y guardamos el estado de fase 2
         selection.phase2 = null;
         if (phase2Input) {
-            selection.phase2 = { id: phase2Input.value, name: phase2Input.closest('.plan-card').querySelector('h3').textContent, price: parseFloat(phase2Input.dataset.price) };
-            totalProjectCost += selection.phase2.price;
+            const phase2Price = parseFloat(phase2Input.dataset.price);
+            selection.phase2 = { id: phase2Input.value, name: phase2Input.closest('.plan-card').querySelector('h3').textContent, price: phase2Price };
+            if (selection.isFinanced) financedAmount += phase2Price;
+            else totalProjectCost += phase2Price;
         }
 
         // 3. Módulos Adicionales (Fase 3) - Lógica mejorada para múltiples addons
@@ -132,15 +143,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (input.checked) {
                     const price = parseFloat(input.dataset.price) || 0;
                     const monthlyPrice = parseFloat(input.dataset.monthlyPrice) || 0;
-                    addonsCost += price;
+                    if (selection.isFinanced) financedAmount += price;
+                    else addonsCost += price;
                     addonsMonthlyCost += monthlyPrice;
                     selection.addons.push({
                         name: input.closest('.addon-card').querySelector('h4').textContent,
-                        price: price
+                        price: price,
+                        monthlyPrice: monthlyPrice
                     });
                 }
             }
         });
+
+        if (selection.isFinanced && financedAmount > 0) {
+            const totalFinanced = financedAmount * 1.20; // Se aplica un 20% de interés
+            monthlyFinancedPayment = totalFinanced / 12;
+        }
 
         totalProjectCost += addonsCost;
         monthlyCost += addonsMonthlyCost;
@@ -159,16 +177,60 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selection.addons.length > 0) {
             summaryHTML += `<p class="mt-4"><strong class="text-purple-400">Fase 3 (Módulos):</strong></p>`;
             selection.addons.forEach(addon => {
-                summaryHTML += `<p class="pl-4 text-sm">&#9679; ${addon.name} (+${formatCurrency(addon.price)})</p>`;
+                let addonText = `&#9679; ${addon.name}`;
+                if (selection.isFinanced) {
+                    if (addon.price > 0) addonText += ` (financiado)`;
+                } else { addonText += ` (+${formatCurrency(addon.price)})`; }
+                summaryHTML += `<p class="pl-4 text-sm">${addonText}</p>`;
             });
         }
         summaryHTML += `<p class="mt-4 border-t border-gray-600 pt-4"><strong class="text-green-400">Inversión Total del Proyecto:</strong> ${formatCurrency(totalProjectCost)}</p>`;
-        summaryHTML += `<p class="mt-2"><strong class="text-cyan-400">Servicio Mensual Total:</strong> ${formatCurrency(monthlyCost)}</p>`;
-        finalSummaryEl.innerHTML = summaryHTML;
+        
+        // Desglose del costo mensual
+        summaryHTML += `<div class="mt-2 pt-2 border-t border-gray-700">`;
+        summaryHTML += `<p><strong class="text-cyan-400">Desglose Mensual:</strong></p>`;
+        summaryHTML += `<ul class="list-none pl-4 text-sm space-y-1 mt-2">`;
+        summaryHTML += `<li><span>Servicio Base (Hosting y Soporte):</span><span class="float-right">${formatCurrency(150)}</span></li>`;
+        if (addonsMonthlyCost > 0) {
+            summaryHTML += `<li><span>Costo Mensual Módulos:</span><span class="float-right">${formatCurrency(addonsMonthlyCost)}</span></li>`;
+        }
+        if (monthlyFinancedPayment > 0) {
+            summaryHTML += `<li><span>Cuota de Financiamiento (12 meses):</span><span class="float-right">${formatCurrency(monthlyFinancedPayment)}</span></li>`;
+        }
+        summaryHTML += `</ul>`;
+        summaryHTML += `<p class="mt-2 border-t border-gray-600 pt-2"><strong class="text-cyan-400">Servicio Mensual Total:</strong><span class="float-right font-bold text-lg">${formatCurrency(monthlyCost)}</span></p>`;
+        summaryHTML += `</div>`;
 
-        // 6. Actualizar el enlace de WhatsApp del botón de aprobación
+        finalSummaryEl.innerHTML = summaryHTML;
+        
+        // 6. Actualizar sección de Próximos Pasos y Términos
+        let termsHTML = `<ul class="list-disc list-inside space-y-2">`;
+        termsHTML += `<li>Para iniciar la <strong>Fase 1</strong>, se requiere el pago inicial de <strong>${formatCurrency(initialPayment)}</strong>.</li>`;
+        
+        if (selection.phase2) {
+            const isPosIntegration = selection.phase2.id === 'profesional' || selection.phase2.id === 'legendaria';
+            if (isPosIntegration) {
+                termsHTML += `<li>La <strong>Fase 2 (${selection.phase2.name})</strong> incluye una integración con BrainPOS. Esto requiere una coordinación y un pago de S/ 1,500 directamente a BrainPOS, que es independiente de mi trabajo.</li>`;
+            }
+        }
+
+        if (selection.isFinanced) {
+            termsHTML += `<li class="text-yellow-300">Al activar el <strong>Plan de Financiamiento</strong>, los costos de Fase 2 y 3 se dividen en 12 cuotas mensuales con un interés del 20% ya incluido en el total mensual. El no pago de las cuotas puede resultar en la suspensión del servicio.</li>`;
+        }
+
+        if (selection.addons.length > 0) {
+            termsHTML += `<li>La implementación de los <strong>Módulos de Fase 3</strong> comenzará una vez se haya completado y liquidado la Fase 2.</li>`;
+        }
+
+        termsHTML += `<li>El servicio mensual cubre hosting, mantenimiento, seguridad y soporte para actualizaciones de contenido vía WhatsApp.</li>`;
+        termsHTML += `<li>Esta propuesta tiene una validez de 15 días.</li>`;
+        termsHTML += `</ul>`;
+        nextStepsEl.innerHTML = termsHTML;
+
+
+        // 7. Actualizar el enlace de WhatsApp del botón de aprobación
         const phoneNumber = "51924281623"; // Número sin +, espacios ni guiones
-        let messageBody = "Hola, confirmo la aprobación de la propuesta *Play Time-Resto Gamer* con la siguiente configuración:\n\n";
+        let messageBody = `Hola, confirmo la aprobación de la propuesta *Play Time-Resto Gamer* con la siguiente configuración (${selection.isFinanced ? "CON financiamiento" : "SIN financiamiento"}):\n\n`;
         
         messageBody += `*--- FASE 1: Lanzamiento Piloto ---*\n`;
         messageBody += `Inversión: ${formatCurrency(selection.phase1.price)}\n`;
@@ -184,7 +246,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selection.addons.length > 0) {
             messageBody += `*--- FASE 3: Módulos Adicionales ---*\n`;
             selection.addons.forEach(addon => {
-                messageBody += `- ${addon.name} (+${formatCurrency(addon.price)})\n`;
+                let addonText = `- ${addon.name}`;
+                if (selection.isFinanced) {
+                    if (addon.price > 0) addonText += ` (financiado)`;
+                } else { addonText += ` (+${formatCurrency(addon.price)})`; }
+                messageBody += `${addonText}\n`;
             });
             messageBody += `\n`;
         }
@@ -192,7 +258,17 @@ document.addEventListener('DOMContentLoaded', () => {
         messageBody += `------------------------------------\n`;
         messageBody += `*RESUMEN DE COSTOS:*\n`;
         messageBody += `*Inversión Total del Proyecto:* ${formatCurrency(totalProjectCost)}\n`;
-        messageBody += `*Servicio Mensual Total:* ${formatCurrency(monthlyCost)}\n`;
+        messageBody += `*Servicio Mensual Total:* ${formatCurrency(monthlyCost)}`;
+        // Añadir desglose al mensaje de WhatsApp
+        if (addonsMonthlyCost > 0 || monthlyFinancedPayment > 0) {
+            messageBody += ` (Desglose:`;
+            messageBody += ` Base ${formatCurrency(150)}`;
+            if (addonsMonthlyCost > 0) messageBody += ` + Módulos ${formatCurrency(addonsMonthlyCost)}`;
+            if (monthlyFinancedPayment > 0) messageBody += ` + Financ. ${formatCurrency(monthlyFinancedPayment)}`;
+            messageBody += `)`;
+        }
+        messageBody += `\n`;
+
         messageBody += `------------------------------------\n\n`;
         messageBody += `Quedo a la espera de los siguientes pasos. ¡Gracias!`;
 
@@ -232,6 +308,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             updateSummary();
         });
+    });
+
+    financingToggle.addEventListener('change', () => {
+        updateSummary();
+    });
+
+    // Lógica para colapsar/expandir el carrito en móvil
+    const summaryCartHeader = document.getElementById('summary-cart-header');
+    summaryCartHeader.addEventListener('click', () => {
+        summaryCart.classList.toggle('expanded');
     });
 
     goToStep(1);
