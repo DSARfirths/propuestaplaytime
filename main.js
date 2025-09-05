@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalMensualEl = document.getElementById('total-mensual');
     const finalSummaryEl = document.getElementById('final-summary');
     const deliveryStep = document.getElementById('step-4');
+    const approveBtn = document.getElementById('approve-btn');
     const progressSteps = document.querySelectorAll('.progress-step');
 
     // --- LÓGICA DE NAVEGACIÓN ---
@@ -55,18 +56,21 @@ document.addEventListener('DOMContentLoaded', () => {
     nextButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             let nextStep = parseInt(btn.dataset.next) || currentStep + 1;
-            // Lógica condicional para saltar la Fase 3 si no se elige la opción profesional
-            if (currentStep === 3 && selection.phase2 && selection.phase2.id !== 'profesional') {
+            // Lógica condicional para saltar la Fase 3 si no se elige una opción con integración POS
+            const phase2UnlocksAddons = selection.phase2 && (selection.phase2.id === 'profesional' || selection.phase2.id === 'legendaria');
+            if (currentStep === 3 && !phase2UnlocksAddons) {
                 nextStep = 5; // Saltar a la última página
             }
             goToStep(nextStep);
             updateSummary();
         });
     });
+
     prevButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             let prevStep = currentStep - 1;
-            if (currentStep === 5 && selection.phase2 && selection.phase2.id !== 'profesional') {
+            const phase2UnlocksAddons = selection.phase2 && (selection.phase2.id === 'profesional' || selection.phase2.id === 'legendaria');
+            if (currentStep === 5 && !phase2UnlocksAddons) {
                 prevStep = 3;
             }
             goToStep(prevStep);
@@ -113,8 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
         selection.addons = []; // Limpiamos para reconstruir la selección
 
         addonInputs.forEach(input => {
-            // Si el plan "Profesional" no está seleccionado, desmarcamos y deshabilitamos todos los addons
-            if (!selection.phase2 || selection.phase2.id !== 'profesional') {
+            // Si no se ha seleccionado un plan que desbloquee addons (Profesional o Legendaria), los deshabilitamos
+            const addonsEnabled = selection.phase2 && (selection.phase2.id === 'profesional' || selection.phase2.id === 'legendaria');
+            if (!addonsEnabled) {
                 input.checked = false;
                 input.disabled = true;
                 input.closest('.addon-card').classList.add('opacity-50', 'cursor-not-allowed');
@@ -160,6 +165,38 @@ document.addEventListener('DOMContentLoaded', () => {
         summaryHTML += `<p class="mt-4 border-t border-gray-600 pt-4"><strong class="text-green-400">Inversión Total del Proyecto:</strong> ${formatCurrency(totalProjectCost)}</p>`;
         summaryHTML += `<p class="mt-2"><strong class="text-cyan-400">Servicio Mensual Total:</strong> ${formatCurrency(monthlyCost)}</p>`;
         finalSummaryEl.innerHTML = summaryHTML;
+
+        // 6. Actualizar el enlace de WhatsApp del botón de aprobación
+        const phoneNumber = "51924281623"; // Número sin +, espacios ni guiones
+        let messageBody = "Hola, confirmo la aprobación de la propuesta *Play Time-Resto Gamer* con la siguiente configuración:\n\n";
+        
+        messageBody += `*--- FASE 1: Lanzamiento Piloto ---*\n`;
+        messageBody += `Inversión: ${formatCurrency(selection.phase1.price)}\n`;
+        const paymentText = selection.phase1.payment === '2cuotas' ? '2 cuotas' : '1 pago único';
+        messageBody += `Modalidad de Pago: ${paymentText}\n\n`;
+
+        if (selection.phase2) {
+            messageBody += `*--- FASE 2: Expansión ---*\n`;
+            messageBody += `Opción: ${selection.phase2.name}\n`;
+            messageBody += `Costo Adicional: ${formatCurrency(selection.phase2.price)}\n\n`;
+        }
+
+        if (selection.addons.length > 0) {
+            messageBody += `*--- FASE 3: Módulos Adicionales ---*\n`;
+            selection.addons.forEach(addon => {
+                messageBody += `- ${addon.name} (+${formatCurrency(addon.price)})\n`;
+            });
+            messageBody += `\n`;
+        }
+
+        messageBody += `------------------------------------\n`;
+        messageBody += `*RESUMEN DE COSTOS:*\n`;
+        messageBody += `*Inversión Total del Proyecto:* ${formatCurrency(totalProjectCost)}\n`;
+        messageBody += `*Servicio Mensual Total:* ${formatCurrency(monthlyCost)}\n`;
+        messageBody += `------------------------------------\n\n`;
+        messageBody += `Quedo a la espera de los siguientes pasos. ¡Gracias!`;
+
+        approveBtn.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(messageBody)}`;
     };
 
     const updateSummaryCartVisibility = () => {

@@ -12,6 +12,10 @@ body {
     text-shadow: 0 0 5px #a855f7, 0 0 10px #a855f7, 0 0 15px #a855f7; 
 }
 
+.neon-text-gold {
+    text-shadow: 0 0 5px #fbbf24, 0 0 10px #fbbf24, 0 0 15px #fbbf24; /* Corresponde a text-amber-400 */
+}
+
 main.container {
     padding-bottom: 10rem; /* Espacio para que el summary-cart no tape el contenido */
 }

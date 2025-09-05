@@ -97,15 +97,18 @@
             </h2>
             <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">Una vez el piloto sea un éxito, eligen cómo
                 escalar. El costo del piloto (S/ 1,200) ya se considera parte de la inversión de esta fase.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 <label class="plan-card p-8 cursor-pointer">
                     <input type="radio" name="phase2" class="hidden" value="inteligente" data-price="1800">
-                    <h3 class="font-gamer text-xl uppercase text-cyan-400">Despliegue Inteligente</h3>
-                    <p class="text-gray-400 mb-6">Activar en las 14 mesas restantes</p>
+                    <h3 class="font-gamer text-xl uppercase text-cyan-400">Despliegue Rápido</h3>
+                    <p class="text-gray-400 mb-6">Activar en las 14 mesas restantes sin POS</p>
                     <p class="font-bold text-4xl mb-6 text-green-400">+ S/ 1,800</p>
-                    <p class="text-sm text-gray-500 mb-4">(Total del proyecto: S/ 3,000)</p>
+                    <p class="text-sm text-gray-500 mb-4">(Total Acumulado del proyecto: S/ 3,000)</p>
                     <p class="text-sm">La opción más rápida y rentable para tener la experiencia completa en todo el
-                        local.</p>
+                        local, pero sin integración con POS.</p>
+                    <p class="text-sm mt-4 p-3 rounded-md bg-yellow-900/50 text-yellow-300 border border-yellow-700/50">
+                        <strong>Importante:</strong> Al no tener integración, el pedido que llega a la pantalla de cocina/caja deberá ser ingresado manualmente al sistema POS.
+                    </p>
                 </label>
                 <label class="plan-card p-8 cursor-pointer">
                     <input type="radio" name="phase2" class="hidden" value="profesional" data-price="2800">
@@ -116,6 +119,15 @@
                             class="text-yellow-400 font-bold">+ S/ 1,500 a BrainPOS</span></p>
                     <p class="text-sm">La solución definitiva para una operación 100% automatizada. <strong
                             class="text-white">Desbloquea la Fase 3.</strong></p>
+                </label>
+                <label class="plan-card p-8 cursor-pointer">
+                    <input type="radio" name="phase2" class="hidden" value="legendaria" data-price="5800" checked>
+                    <h3 class="font-gamer text-xl uppercase text-amber-400 neon-text-gold">PWA Legendaria</h3>
+                    <p class="text-gray-400 mb-6">Progressive Web App (PWA) instalable con tu marca</p>
+                    <p class="font-bold text-4xl mb-6 text-green-400">+ S/ 5,800</p>
+                    <p class="text-sm text-gray-500 mb-4">(Total de mi trabajo: S/ 7,000) <br> <span
+                            class="text-yellow-400 font-bold">+ S/ 1,500 a BrainPOS</span></p>
+                    <p class="text-sm">La experiencia de una app (ícono en el celular, notificaciones) sin las barreras de las tiendas de aplicaciones. Máxima lealtad y prestigio con una tecnología moderna. <strong class="text-white">Desbloquea la Fase 3.</strong></p>
                 </label>
             </div>
             <div class="step-navigation">
@@ -216,8 +228,8 @@
             <div class="step-navigation">
                 <button class="btn-secondary prev-btn">◀ Anterior</button>
                 <a href="mailto:tucorreo@example.com?subject=Aceptación de Propuesta - Play Time-Resto Gamer"
-                    class="btn-primary font-gamer inline-block px-8 py-4 rounded-lg text-lg uppercase">
-                    Aprobar y Empezar FASE 1
+                    id="approve-btn" class="btn-primary font-gamer inline-block px-8 py-4 rounded-lg text-lg uppercase">
+                    Aprobar y Comenzar Misión
                 </a>
             </div>
         </section>
