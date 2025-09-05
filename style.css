@@ -66,6 +66,7 @@ main.container {
     border: 2px solid #374151;
     border-radius: 0.5rem;
     transition: all 0.3s ease;
+    position: relative; /* <-- AÑADIR ESTA LÍNEA */
 }
 .plan-card.selected {
     border-color: #a855f7;
@@ -215,4 +216,20 @@ main.container {
 
     /* Ajustar el padding inferior para el carrito en móvil */
     main.container { padding-bottom: 12rem; }
+}
+
+/* --- Animación para actualización de valores --- */
+@keyframes value-flash {
+    0% {
+        transform: scale(1.1);
+        text-shadow: 0 0 10px #34d399;
+    }
+    100% {
+        transform: scale(1);
+        text-shadow: none;
+    }
+}
+
+.value-updated {
+    animation: value-flash 0.4s ease-out;
 }

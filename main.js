@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const updateNavigation = () => {
-        const prevBtn = document.querySelector(`#step-${currentStep} ~ .step-navigation .prev-btn`);
-        const nextBtn = document.querySelector(`#step-${currentStep} ~ .step-navigation .next-btn`);
+        const prevBtn = document.querySelector(`#step-${currentStep} .prev-btn`);
+        const nextBtn = document.querySelector(`#step-${currentStep} .next-btn`);
         if (prevBtn) prevBtn.style.display = currentStep > 1 ? 'inline-block' : 'none';
         if (nextBtn) nextBtn.style.display = currentStep < steps.length ? 'inline-block' : 'none';
     };
@@ -76,6 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- LÓGICA DE CÁLCULO Y ACTUALIZACIÓN ---
     const formatCurrency = (value) => new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(value);
 
+    const animateUpdate = (element, newValue) => {
+        // Solo animar si el valor realmente cambia para evitar flashes innecesarios
+        if (element.textContent !== newValue) {
+            element.classList.add('value-updated');
+            element.textContent = newValue;
+            // Eliminar la clase después de la animación para que pueda volver a ejecutarse
+            element.addEventListener('animationend', () => {
+                element.classList.remove('value-updated');
+            }, { once: true }); // La opción 'once' es clave para que el listener se autolimpie
+        }
+    };
+
     const updateSummary = () => {
         // 1. Costo inicial (Fase 1)
         const paymentPhase1 = document.querySelector('input[name="payment_phase1"]:checked').value;
@@ -106,9 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Actualizar UI
-        totalInicialEl.textContent = formatCurrency(initialPayment);
-        totalProyectoEl.textContent = formatCurrency(totalProjectCost);
-        totalMensualEl.textContent = formatCurrency(monthlyCost);
+        animateUpdate(totalInicialEl, formatCurrency(initialPayment));
+        animateUpdate(totalProyectoEl, formatCurrency(totalProjectCost));
+        animateUpdate(totalMensualEl, formatCurrency(monthlyCost));
 
         // Actualizar resumen final
         let summaryHTML = `<p><strong class="text-purple-400">Fase 1:</strong> Lanzamiento Piloto (${formatCurrency(selection.phase1.price)})</p>
