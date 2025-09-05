@@ -193,3 +193,26 @@ main.container {
     color: #d1d5db; /* gray-300 */
     font-weight: bold;
 }
+
+/* --- Estilos para Móviles --- */
+@media (max-width: 640px) {
+    /* Ocultar etiquetas de la barra de progreso en pantallas pequeñas para evitar solapamiento */
+    .progress-label {
+        display: none;
+    }
+
+    /* Ajustar el carrito flotante para que el contenido se apile */
+    .summary-cart .container {
+        gap: 0.5rem; /* Espacio entre elementos apilados */
+    }
+
+    .summary-cart p {
+        font-size: 0.875rem; /* Reducir un poco el tamaño del texto */
+    }
+    .summary-cart .font-bold {
+        font-size: 1.25rem; /* Reducir el tamaño del precio */
+    }
+
+    /* Ajustar el padding inferior para el carrito en móvil */
+    main.container { padding-bottom: 12rem; }
+}

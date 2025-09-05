@@ -95,7 +95,7 @@
              <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 3: Módulo Delivery (Opcional)</h2>
              <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">Al elegir la integración con POS, desbloquean la capacidad de lanzar su propio canal de delivery, eliminando comisiones de terceros y fidelizando a sus clientes.</p>
              <div class="max-w-4xl mx-auto">
-                <label for="addon-delivery" class="addon-card p-8 flex items-center justify-between cursor-pointer">
+                <label for="addon-delivery" class="addon-card p-8 flex flex-col sm:flex-row items-start sm:items-center sm:justify-between cursor-pointer">
                     <div class="flex items-center">
                         <input type="checkbox" id="addon-delivery" class="custom-checkbox" data-price="2000" data-monthly-price="30">
                         <div class="ml-4">
@@ -107,7 +107,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="text-right">
+                    <div class="text-right mt-4 sm:mt-0 w-full sm:w-auto">
                         <p class="font-bold text-lg text-green-400">+ S/ 2,000</p>
                         <p class="text-sm text-gray-500">pago único</p>
                     </div>
@@ -142,16 +142,16 @@
     </main>
     
     <div id="summary-cart" class="summary-cart">
-        <div class="container mx-auto flex items-center justify-between">
-            <div>
+        <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between text-center sm:text-left">
+            <div class="mb-2 sm:mb-0">
                 <p class="text-gray-400 text-sm">FASE 1 - PAGO INICIAL</p>
                 <p id="total-inicial" class="font-bold text-2xl text-green-400">S/ 600.00</p>
             </div>
-            <div>
+            <div class="mb-2 sm:mb-0">
                 <p class="text-gray-400 text-sm">INVERSIÓN TOTAL (EST.)</p>
                 <p id="total-proyecto" class="font-bold text-2xl text-white">S/ 3,000.00</p>
             </div>
-             <div>
+             <div class="mb-2 sm:mb-0">
                 <p class="text-gray-400 text-sm">SERVICIO MENSUAL (EST.)</p>
                 <p id="total-mensual" class="font-bold text-2xl text-white">S/ 150.00</p>
             </div>
