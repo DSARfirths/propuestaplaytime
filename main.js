@@ -22,6 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextStepsEl = document.getElementById('next-steps-summary');
     const financingExplanation = document.getElementById('financing-explanation');
 
+    // --- ELEMENTOS DE AUDIO ---
+    const clickSound = document.getElementById('sound-click');
+    const selectSound = document.getElementById('sound-select');
+    const nextStepSound = document.getElementById('sound-next-step');
+    const approveSound = document.getElementById('sound-approve');
+
+    const playSound = (audioElement) => {
+        if (!audioElement) return;
+        audioElement.currentTime = 0;
+        audioElement.play().catch(e => console.error("Error al reproducir sonido:", e));
+    };
+
     // --- LÓGICA DE NAVEGACIÓN ---
     let currentStep = 1;
 
@@ -65,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nextButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             let nextStep = parseInt(btn.dataset.next) || currentStep + 1;
+            playSound(nextStepSound);
             // Lógica condicional para saltar la Fase 3 si no se elige una opción con integración POS
             const phase2UnlocksAddons = selection.phase2 && (selection.phase2.id === 'profesional' || selection.phase2.id === 'legendaria');
             if (currentStep === 3 && !phase2UnlocksAddons) { // Salta de Fase 2 a Servicio
@@ -78,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     prevButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             let prevStep = currentStep - 1;
+            playSound(clickSound);
             const phase2UnlocksAddons = selection.phase2 && (selection.phase2.id === 'profesional' || selection.phase2.id === 'legendaria');
             if (currentStep === 5 && !phase2UnlocksAddons) { // Vuelve de Servicio a Fase 2
                 prevStep = 3; // Saltar hacia atrás a la Fase 2
@@ -212,25 +226,28 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 6. Actualizar sección de Próximos Pasos y Términos
         let termsHTML = `<ul class="list-disc list-inside space-y-2">`;
-        termsHTML += `<li>Para iniciar la <strong>Fase 1</strong>, se requiere el pago inicial de <strong>${formatCurrency(initialPayment)}</strong>.</li>`;
+        termsHTML += `<li><strong>Inicio y Tiempos:</strong> Para iniciar la <strong>Fase 1</strong>, se requiere el pago inicial de <strong>${formatCurrency(initialPayment)}</strong>. El tiempo de entrega estimado es de 3-5 días hábiles.</li>`;
         
         if (selection.phase2) {
             const isPosIntegration = selection.phase2.id === 'profesional' || selection.phase2.id === 'legendaria';
             if (isPosIntegration) {
-                termsHTML += `<li>La <strong>Fase 2 (${selection.phase2.name})</strong> incluye una integración con BrainPOS. Esto requiere una coordinación y un pago de S/ 1,500 directamente a BrainPOS, que es independiente de mi trabajo.</li>`;
+                termsHTML += `<li><strong>Fase 2 con Integración:</strong> La opción <strong>${selection.phase2.name}</strong> requiere una coordinación y un pago de S/ 1,500 directamente a BrainPOS. El tiempo de desarrollo para esta fase es de 10-15 días hábiles post-Fase 1.</li>`;
+            } else {
+                termsHTML += `<li><strong>Fase 2 sin Integración:</strong> La opción <strong>${selection.phase2.name}</strong> se implementará en un estimado de 5-7 días hábiles post-Fase 1.</li>`;
             }
         }
 
         if (selection.isFinanced) {
-            termsHTML += `<li class="text-yellow-300">Al activar el <strong>Plan de Financiamiento</strong>, los costos de Fase 2 y 3 se dividen en 12 cuotas mensuales con un interés del 20% ya incluido en el total mensual. El no pago de las cuotas puede resultar en la suspensión del servicio.</li>`;
+            termsHTML += `<li class="text-yellow-300"><strong>Financiamiento:</strong> Al activar esta opción, los costos de Fase 2 y 3 se dividen en 12 cuotas. El no pago de 2 cuotas consecutivas resultará en la suspensión temporal del servicio.</li>`;
         }
 
         if (selection.addons.length > 0) {
-            termsHTML += `<li>La implementación de los <strong>Módulos de Fase 3</strong> comenzará una vez se haya completado y liquidado la Fase 2.</li>`;
+            termsHTML += `<li><strong>Módulos Adicionales:</strong> La implementación de los módulos de Fase 3 comenzará tras completar la Fase 2. Cada módulo tiene un tiempo de desarrollo de 5-7 días hábiles.</li>`;
         }
 
-        termsHTML += `<li>El servicio mensual cubre hosting, mantenimiento, seguridad y soporte para actualizaciones de contenido vía WhatsApp.</li>`;
-        termsHTML += `<li>Esta propuesta tiene una validez de 15 días.</li>`;
+        termsHTML += `<li><strong>Servicio Mensual:</strong> El servicio mensual cubre hosting, mantenimiento, seguridad y soporte. Puede ser cancelado con 30 días de antelación. La cancelación no exime los pagos de financiamiento pendientes.</li>`;
+        termsHTML += `<li><strong>Propiedad Intelectual:</strong> Al finalizar todos los pagos del proyecto, ustedes serán dueños del diseño, contenido y datos de clientes. Yo conservaré los derechos sobre el código base y la tecnología subyacente para futuros proyectos.</li>`;
+        termsHTML += `<li><strong>Validez:</strong> Esta propuesta tiene una validez de 15 días.</li>`;
         termsHTML += `</ul>`;
         nextStepsEl.innerHTML = termsHTML;
 
@@ -305,6 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
         input.addEventListener('change', () => {
+            playSound(selectSound);
             if (input.type === 'radio') {
                 document.querySelectorAll(`input[name="${input.name}"]`).forEach(radio => {
                     radio.closest('.plan-card, .payment-option')?.classList.remove('selected');
@@ -318,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     financingToggle.addEventListener('change', () => {
+        playSound(selectSound);
         updateSummary();
     });
 
@@ -336,9 +355,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    approveBtn.addEventListener('click', () => {
+        playSound(approveSound);
+    });
+
     // Lógica para desplegables de características en Fase 2
     document.querySelectorAll('.details-toggle-btn').forEach(button => {
         button.addEventListener('click', (e) => {
+            playSound(clickSound);
             e.preventDefault(); // Evita que el click en el botón active el radio de la tarjeta
             const details = button.nextElementSibling;
             const arrow = button.querySelector('.arrow');
