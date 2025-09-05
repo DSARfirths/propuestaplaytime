@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSummaryCartVisibility();
         updateProgressBar();
     };
-    
+
     const updateNavigation = () => {
         const prevBtn = document.querySelector(`#step-${currentStep} .prev-btn`);
         const nextBtn = document.querySelector(`#step-${currentStep} .next-btn`);
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     prevButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             let prevStep = currentStep - 1;
-             if (currentStep === 5 && selection.phase2 && selection.phase2.id !== 'profesional') {
+            if (currentStep === 5 && selection.phase2 && selection.phase2.id !== 'profesional') {
                 prevStep = 3;
             }
             goToStep(prevStep);
@@ -93,48 +93,75 @@ document.addEventListener('DOMContentLoaded', () => {
         const paymentPhase1 = document.querySelector('input[name="payment_phase1"]:checked').value;
         selection.phase1.payment = paymentPhase1;
         const initialPayment = paymentPhase1 === '2cuotas' ? selection.phase1.price / 2 : selection.phase1.price;
-        
-        // 2. Costo total del proyecto (Fase 1 + Fase 2 + Delivery)
+
+        // 2. Costo del proyecto (Fase 1 + Fase 2)
         const phase2Input = document.querySelector('input[name="phase2"]:checked');
         let totalProjectCost = selection.phase1.price;
         let monthlyCost = 150; // Base
-        
+        let addonsCost = 0; // Costo de addons
+        let addonsMonthlyCost = 0; // Costo mensual de addons
+
+        // Reseteamos y guardamos el estado de fase 2
+        selection.phase2 = null;
         if (phase2Input) {
             selection.phase2 = { id: phase2Input.value, name: phase2Input.closest('.plan-card').querySelector('h3').textContent, price: parseFloat(phase2Input.dataset.price) };
             totalProjectCost += selection.phase2.price;
-        } else {
-            selection.phase2 = null;
-            // Ya no es necesario manipular el display aquí, la navegación se encarga.
         }
 
-        // 3. Módulo de Delivery
-        const deliveryInput = document.getElementById('addon-delivery');
-        selection.delivery = deliveryInput.checked;
-        if (selection.delivery && selection.phase2 && selection.phase2.id === 'profesional') {
-            totalProjectCost += parseFloat(deliveryInput.dataset.price);
-            monthlyCost += parseFloat(deliveryInput.dataset.monthlyPrice);
-        } else {
-            deliveryInput.checked = false; // Desmarcar si no es profesional
-        }
-        
-        // Actualizar UI
+        // 3. Módulos Adicionales (Fase 3) - Lógica mejorada para múltiples addons
+        const addonInputs = document.querySelectorAll('input[name="addons"]');
+        selection.addons = []; // Limpiamos para reconstruir la selección
+
+        addonInputs.forEach(input => {
+            // Si el plan "Profesional" no está seleccionado, desmarcamos y deshabilitamos todos los addons
+            if (!selection.phase2 || selection.phase2.id !== 'profesional') {
+                input.checked = false;
+                input.disabled = true;
+                input.closest('.addon-card').classList.add('opacity-50', 'cursor-not-allowed');
+                input.closest('.addon-card').classList.remove('selected');
+            } else {
+                // Si el plan es profesional, los habilitamos
+                input.disabled = false;
+                input.closest('.addon-card').classList.remove('opacity-50', 'cursor-not-allowed');
+
+                if (input.checked) {
+                    const price = parseFloat(input.dataset.price) || 0;
+                    const monthlyPrice = parseFloat(input.dataset.monthlyPrice) || 0;
+                    addonsCost += price;
+                    addonsMonthlyCost += monthlyPrice;
+                    selection.addons.push({
+                        name: input.closest('.addon-card').querySelector('h4').textContent,
+                        price: price
+                    });
+                }
+            }
+        });
+
+        totalProjectCost += addonsCost;
+        monthlyCost += addonsMonthlyCost;
+
+        // 4. Actualizar UI
         animateUpdate(totalInicialEl, formatCurrency(initialPayment));
         animateUpdate(totalProyectoEl, formatCurrency(totalProjectCost));
         animateUpdate(totalMensualEl, formatCurrency(monthlyCost));
 
-        // Actualizar resumen final
+        // 5. Actualizar resumen final en la última página
         let summaryHTML = `<p><strong class="text-purple-400">Fase 1:</strong> Lanzamiento Piloto (${formatCurrency(selection.phase1.price)})</p>
-                           <p class="pl-4 text-sm"><strong class="text-yellow-400">Pago Inicial:</strong> ${formatCurrency(initialPayment)}</p>`;
+                       <p class="pl-4 text-sm"><strong class="text-yellow-400">Pago Inicial:</strong> ${formatCurrency(initialPayment)}</p>`;
         if (selection.phase2) {
-             summaryHTML += `<p class="mt-4"><strong class="text-purple-400">Fase 2 (Seleccionada):</strong> ${selection.phase2.name} (+${formatCurrency(selection.phase2.price)})</p>`;
+            summaryHTML += `<p class="mt-4"><strong class="text-purple-400">Fase 2:</strong> ${selection.phase2.name} (+${formatCurrency(selection.phase2.price)})</p>`;
         }
-        if (selection.delivery && selection.phase2.id === 'profesional') {
-             summaryHTML += `<p class="mt-4"><strong class="text-purple-400">Fase 3 (Seleccionada):</strong> Módulo Delivery (+${formatCurrency(deliveryInput.dataset.price)})</p>`;
+        if (selection.addons.length > 0) {
+            summaryHTML += `<p class="mt-4"><strong class="text-purple-400">Fase 3 (Módulos):</strong></p>`;
+            selection.addons.forEach(addon => {
+                summaryHTML += `<p class="pl-4 text-sm">&#9679; ${addon.name} (+${formatCurrency(addon.price)})</p>`;
+            });
         }
-        summaryHTML += `<p class="mt-4"><strong class="text-purple-400">Servicio Mensual Total:</strong> ${formatCurrency(monthlyCost)}</p>`;
+        summaryHTML += `<p class="mt-4 border-t border-gray-600 pt-4"><strong class="text-green-400">Inversión Total del Proyecto:</strong> ${formatCurrency(totalProjectCost)}</p>`;
+        summaryHTML += `<p class="mt-2"><strong class="text-cyan-400">Servicio Mensual Total:</strong> ${formatCurrency(monthlyCost)}</p>`;
         finalSummaryEl.innerHTML = summaryHTML;
     };
-    
+
     const updateSummaryCartVisibility = () => {
         if (currentStep > 1) {
             summaryCart.classList.add('visible');
@@ -142,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             summaryCart.classList.remove('visible');
         }
     };
-    
+
     // --- INICIALIZACIÓN ---
     const initializeSelections = () => {
         // Asegura que el estado visual inicial coincida con los inputs 'checked'
@@ -164,12 +191,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 input.closest('.plan-card, .payment-option')?.classList.add('selected');
             } else {
-                 input.closest('.addon-card').classList.toggle('selected', input.checked);
+                input.closest('.addon-card').classList.toggle('selected', input.checked);
             }
             updateSummary();
         });
     });
-    
+
     goToStep(1);
     initializeSelections(); // Llama a la función para establecer el estado visual inicial
     updateSummary();

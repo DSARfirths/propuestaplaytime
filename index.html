@@ -125,37 +125,76 @@
         </section>
 
         <section id="step-4" class="step">
-            <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 3: Módulo Delivery
-                (Opcional)</h2>
-            <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">Al elegir la integración con POS, desbloquean
-                la capacidad de lanzar su propio canal de delivery, eliminando comisiones de terceros y fidelizando a
-                sus clientes.</p>
-            <div class="max-w-4xl mx-auto">
-                <label for="addon-delivery"
-                    class="addon-card p-8 flex flex-col sm:flex-row items-start sm:items-center sm:justify-between cursor-pointer">
-                    <div class="flex items-center">
-                        <input type="checkbox" id="addon-delivery" class="custom-checkbox" data-price="2000"
-                            data-monthly-price="30">
-                        <div class="ml-4">
-                            <h4 class="font-bold text-lg text-white">Activar Módulo de Delivery Propio</h4>
-                            <ul class="text-sm text-gray-400 list-disc list-inside mt-2">
-                                <li>Cero comisiones por venta.</li>
-                                <li>Base de datos de clientes propia.</li>
-                                <li>Experiencia de marca unificada.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="text-right mt-4 sm:mt-0 w-full sm:w-auto">
-                        <p class="font-bold text-lg text-green-400">+ S/ 2,000</p>
-                        <p class="text-sm text-gray-500">pago único</p>
-                    </div>
-                </label>
+    <h2 class="font-gamer text-2xl md:text-3xl text-center mb-6 text-purple-400">Fase 3: Potencia tu Plataforma</h2>
+    <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">
+        Al elegir la "Integración Profesional", desbloqueas el acceso a módulos de alto valor. Selecciona las herramientas que llevarán tu operación y marketing al siguiente nivel.
+    </p>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <label for="addon-delivery" class="addon-card p-6 flex flex-col cursor-pointer h-full">
+            <div class="flex items-center">
+                <input type="checkbox" id="addon-delivery" name="addons" class="custom-checkbox" data-price="2000" data-monthly-price="30">
+                <h4 class="font-bold text-lg text-white ml-4">Módulo Delivery Propio</h4>
             </div>
-            <div class="step-navigation">
-                <button class="btn-secondary prev-btn">◀ Anterior</button>
-                <button class="btn-primary next-btn">Siguiente ▶</button>
+            <p class="text-sm text-gray-400 mt-3 flex-grow">
+                Lanza tu propio canal de ventas directas. <strong>Elimina para siempre las comisiones de terceros</strong> y construye tu propia base de datos de clientes para futuras campañas.
+            </p>
+            <div class="text-right mt-4">
+                <p class="font-bold text-lg text-green-400">+ S/ 2,000</p>
+                <p class="text-sm text-gray-500">pago único</p>
             </div>
-        </section>
+        </label>
+
+        <label for="addon-reservas" class="addon-card p-6 flex flex-col cursor-pointer h-full">
+            <div class="flex items-center">
+                <input type="checkbox" id="addon-reservas" name="addons" class="custom-checkbox" data-price="1800" data-monthly-price="20">
+                <h4 class="font-bold text-lg text-white ml-4">Reservas y Lista de Espera</h4>
+            </div>
+            <p class="text-sm text-gray-400 mt-3 flex-grow">
+                Permite que tus clientes reserven su mesa favorita desde la app. <strong>Optimiza la ocupación de tu local y reduce las esperas</strong>, gestionando todo digitalmente sin interrumpir a tu personal.
+            </p>
+            <div class="text-right mt-4">
+                <p class="font-bold text-lg text-green-400">+ S/ 1,800</p>
+                <p class="text-sm text-gray-500">pago único</p>
+            </div>
+        </label>
+
+        <label for="addon-lealtad" class="addon-card p-6 flex flex-col cursor-pointer h-full">
+            <div class="flex items-center">
+                <input type="checkbox" id="addon-lealtad" name="addons" class="custom-checkbox" data-price="1500" data-monthly-price="15">
+                <h4 class="font-bold text-lg text-white ml-4">Programa de Lealtad Digital</h4>
+            </div>
+            <p class="text-sm text-gray-400 mt-3 flex-grow">
+                Convierte a los visitantes casuales en clientes recurrentes. <strong>Fomenta la lealtad recompensando sus visitas con puntos o sellos digitales</strong>, creando una base de fans que elige volver.
+            </p>
+            <div class="text-right mt-4">
+                <p class="font-bold text-lg text-green-400">+ S/ 1,500</p>
+                <p class="text-sm text-gray-500">pago único</p>
+            </div>
+        </label>
+
+        <label for="addon-feedback" class="addon-card p-6 flex flex-col cursor-pointer h-full">
+            <div class="flex items-center">
+                <input type="checkbox" id="addon-feedback" name="addons" class="custom-checkbox" data-price="950" data-monthly-price="0">
+                <h4 class="font-bold text-lg text-white ml-4">Feedback y Reseñas Privadas</h4>
+            </div>
+            <p class="text-sm text-gray-400 mt-3 flex-grow">
+                Descubre lo que tus clientes realmente piensan antes de que lo publiquen en redes. <strong>Recibe feedback valioso y privado directamente en tu panel</strong> para resolver problemas y mejorar proactivamente.
+            </p>
+            <div class="text-right mt-4">
+                <p class="font-bold text-lg text-green-400">+ S/ 950</p>
+                <p class="text-sm text-gray-500">pago único</p>
+            </div>
+        </label>
+
+    </div>
+
+    <div class="step-navigation">
+        <button class="btn-secondary prev-btn">◀ Anterior</button>
+        <button class="btn-primary next-btn">Siguiente ▶</button>
+    </div>
+</section>
 
         <section id="step-5" class="step text-center">
             <h2 class="font-gamer text-2xl md:text-3xl mb-12 text-purple-400">Servicio y Soporte Mensual</h2>
