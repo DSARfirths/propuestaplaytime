@@ -144,13 +144,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // --- INICIALIZACIÓN ---
+    const initializeSelections = () => {
+        // Asegura que el estado visual inicial coincida con los inputs 'checked'
+        document.querySelectorAll('input[type="radio"]:checked').forEach(input => {
+            if (input.closest('.plan-card')) {
+                input.closest('.plan-card').classList.add('selected');
+            }
+            if (input.closest('.payment-option')) {
+                input.closest('.payment-option').classList.add('selected');
+            }
+        });
+    };
+
     document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
         input.addEventListener('change', () => {
             if (input.type === 'radio') {
                 document.querySelectorAll(`input[name="${input.name}"]`).forEach(radio => {
-                    radio.closest('.plan-card').classList.remove('selected');
+                    radio.closest('.plan-card, .payment-option')?.classList.remove('selected');
                 });
-                input.closest('.plan-card').classList.add('selected');
+                input.closest('.plan-card, .payment-option')?.classList.add('selected');
             } else {
                  input.closest('.addon-card').classList.toggle('selected', input.checked);
             }
@@ -159,6 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     goToStep(1);
-    // Ya no es necesario ocultar el paso de delivery aquí.
+    initializeSelections(); // Llama a la función para establecer el estado visual inicial
     updateSummary();
 });

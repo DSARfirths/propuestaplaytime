@@ -66,7 +66,7 @@ main.container {
     border: 2px solid #374151;
     border-radius: 0.5rem;
     transition: all 0.3s ease;
-    position: relative; /* <-- AÑADIR ESTA LÍNEA */
+    position: relative;
 }
 .plan-card.selected {
     border-color: #a855f7;
@@ -150,6 +150,10 @@ main.container {
 .payment-option:hover {
     background-color: rgba(55, 65, 81, 1);
 }
+.payment-option.selected {
+    border-color: #a855f7;
+    background-color: rgba(92, 52, 138, 0.5); /* Un morado más sutil */
+}
 .payment-option input:checked + span {
     color: #a7f3d0; /* text-green-200 */
     font-weight: bold;
@@ -232,4 +236,61 @@ main.container {
 
 .value-updated {
     animation: value-flash 0.4s ease-out;
+}
+/* --- Estilos para Custom Radio Buttons --- */
+.payment-option input[type="radio"] {
+    /* Oculta el radio button nativo */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 0;
+    height: 0;
+    border: none;
+    outline: none;
+    cursor: pointer; /* Mantiene el cursor de puntero para indicar interactividad */
+    position: absolute; /* Para que no ocupe espacio y podamos usar el pseudoelemento */
+}
+
+/* Crea el círculo exterior y el interior */
+.payment-option span::before {
+    content: '';
+    display: inline-block;
+    width: 1.25rem; /* Tamaño del círculo exterior */
+    height: 1.25rem;
+    border-radius: 50%;
+    border: 2px solid #6b7280; /* Color del borde (gray-500) */
+    background-color: #1f2937; /* Color de fondo (gray-800) */
+    vertical-align: middle;
+    margin-right: 0.75rem; /* Espacio entre el círculo y el texto */
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box; /* Asegura que padding/border no aumenten el tamaño total */
+}
+
+/* Estilo cuando el radio está seleccionado (círculo interior) */
+.payment-option input[type="radio"]:checked + span::before {
+    border-color: #a855f7; /* Color del borde cuando está seleccionado (purple-500) */
+    background-color: #a855f7; /* Relleno del círculo cuando está seleccionado */
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.6); /* Sombra para efecto "neón" */
+}
+
+/* Opcional: añade un pequeño punto blanco en el centro cuando está seleccionado */
+.payment-option input[type="radio"]:checked + span::after {
+    content: '';
+    display: block;
+    width: 0.5rem; /* Tamaño del punto */
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: white;
+    position: absolute;
+    left: calc(0.75rem - 0.25rem); /* Ajusta la posición para centrarlo visualmente */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.2s ease-in-out;
+}
+
+/* Ajusta la posición del texto para que se alinee con los radios personalizados */
+.payment-option span {
+    position: relative;
+    display: flex; /* Para alinear el pseudoelemento y el texto */
+    align-items: center;
 }

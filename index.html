@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,15 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Source+Code+Pro:wght@400;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body class="bg-gray-900 text-gray-200 antialiased">
 
     <main class="container mx-auto px-6 py-12">
-        
+
         <div id="progress-bar" class="flex items-start justify-center text-center mb-16">
             <div class="progress-step" data-step="1">
                 <div class="progress-circle">1</div>
@@ -42,10 +46,12 @@
 
         <section id="step-1" class="step active-step text-center">
             <h1 class="font-gamer text-3xl md:text-5xl uppercase neon-text">Propuesta Evolutiva</h1>
-            <p class="mt-4 text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">Un plan por fases para lanzar su experiencia QR, diseñado para empezar <span class="font-bold text-green-400">mañana mismo</span>.</p>
+            <p class="mt-4 text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">Un plan por fases para lanzar su
+                experiencia QR, diseñado para empezar <span class="font-bold text-green-400">mañana mismo</span>.</p>
             <div class="card p-8 max-w-4xl mx-auto mt-12">
                 <h2 class="font-gamer text-xl md:text-2xl mb-4 text-purple-400">Tu "Skin Legendaria"</h2>
-                <p class="text-lg leading-relaxed">Construiremos una experiencia digital única que fortalezca su marca y sorprenda a sus clientes. Empecemos con una primera misión.</p>
+                <p class="text-lg leading-relaxed">Construiremos una experiencia digital única que fortalezca su marca y
+                    sorprenda a sus clientes. Empecemos con una primera misión.</p>
             </div>
             <div class="step-navigation">
                 <button class="btn-secondary prev-btn">◀ Anterior</button>
@@ -54,20 +60,31 @@
         </section>
 
         <section id="step-2" class="step">
-            <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 1: Lanzamiento Piloto</h2>
-            <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">La forma más rápida y segura de validar la experiencia. Implementamos el sistema en 4 mesas clave para medir resultados y obtener feedback real. <strong class="text-white">Podemos empezar mañana.</strong></p>
+            <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 1: Lanzamiento Piloto
+            </h2>
+            <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">La forma más rápida y segura de validar la
+                experiencia. Implementamos el sistema en 4 mesas clave para medir resultados y obtener feedback real.
+                <strong class="text-white">Podemos empezar mañana.</strong></p>
             <div class="max-w-4xl mx-auto">
-                 <label class="plan-card p-8 cursor-pointer selected">
-                    <input type="radio" name="phase1" class="hidden" value="piloto" data-price="1200" checked>
-                    <h3 class="font-gamer text-xl uppercase text-yellow-400">Misión: Piloto (4 Mesas)</h3>
-                    <p class="text-gray-400 mb-6">Inversión para esta fase:</p>
-                    <p class="font-bold text-5xl mb-6">S/ 1,200</p>
+
+                <div class="plan-card p-8">
+
+                    <label for="piloto-radio" class="cursor-pointer block mb-6">
+                        <input type="radio" name="phase1" id="piloto-radio" class="hidden" value="piloto"
+                            data-price="1200" checked>
+                        <h3 class="font-gamer text-xl uppercase text-yellow-400">Misión: Piloto (4 Mesas)</h3>
+                        <p class="text-gray-400 mb-6">Inversión para esta fase:</p>
+                        <p class="font-bold text-5xl">S/ 1,200</p>
+                    </label>
+
                     <h4 class="font-bold text-lg mb-4 text-white">Opciones de Pago Flexibles:</h4>
                     <div class="payment-options space-y-3">
-                        <label class="payment-option"><input type="radio" name="payment_phase1" value="2cuotas" checked><span>2 cuotas de S/ 600 (Para iniciar / A la entrega)</span></label>
-                        <label class="payment-option"><input type="radio" name="payment_phase1" value="1cuota"><span>1 pago único (y empezamos hoy mismo)</span></label>
+                        <label class="payment-option"><input type="radio" name="payment_phase1" value="2cuotas"
+                                checked><span>2 cuotas de S/ 600 (Para iniciar / A la entrega)</span></label>
+                        <label class="payment-option"><input type="radio" name="payment_phase1" value="1cuota"><span>1
+                                pago único (y empezamos hoy mismo)</span></label>
                     </div>
-                </label>
+                </div>
             </div>
             <div class="step-navigation">
                 <button class="btn-secondary prev-btn">◀ Anterior</button>
@@ -76,24 +93,29 @@
         </section>
 
         <section id="step-3" class="step">
-            <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 2: Elige tu Expansión</h2>
-             <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">Una vez el piloto sea un éxito, eligen cómo escalar. El costo del piloto (S/ 1,200) ya se considera parte de la inversión de esta fase.</p>
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                 <label class="plan-card p-8 cursor-pointer">
+            <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 2: Elige tu Expansión
+            </h2>
+            <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">Una vez el piloto sea un éxito, eligen cómo
+                escalar. El costo del piloto (S/ 1,200) ya se considera parte de la inversión de esta fase.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <label class="plan-card p-8 cursor-pointer">
                     <input type="radio" name="phase2" class="hidden" value="inteligente" data-price="1800">
                     <h3 class="font-gamer text-xl uppercase text-cyan-400">Despliegue Inteligente</h3>
-                     <p class="text-gray-400 mb-6">Activar en las 14 mesas restantes</p>
-                     <p class="font-bold text-4xl mb-6 text-green-400">+ S/ 1,800</p>
+                    <p class="text-gray-400 mb-6">Activar en las 14 mesas restantes</p>
+                    <p class="font-bold text-4xl mb-6 text-green-400">+ S/ 1,800</p>
                     <p class="text-sm text-gray-500 mb-4">(Total del proyecto: S/ 3,000)</p>
-                    <p class="text-sm">La opción más rápida y rentable para tener la experiencia completa en todo el local.</p>
+                    <p class="text-sm">La opción más rápida y rentable para tener la experiencia completa en todo el
+                        local.</p>
                 </label>
-                 <label class="plan-card p-8 cursor-pointer">
+                <label class="plan-card p-8 cursor-pointer">
                     <input type="radio" name="phase2" class="hidden" value="profesional" data-price="2800">
                     <h3 class="font-gamer text-xl uppercase text-purple-400">Upgrade a Profesional</h3>
-                     <p class="text-gray-400 mb-6">Integración Directa con POS</p>
+                    <p class="text-gray-400 mb-6">Integración Directa con POS</p>
                     <p class="font-bold text-4xl mb-6 text-green-400">+ S/ 2,800</p>
-                    <p class="text-sm text-gray-500 mb-4">(Total de mi trabajo: S/ 4,000) <br> <span class="text-yellow-400 font-bold">+ S/ 1,500 a BrainPOS</span></p>
-                    <p class="text-sm">La solución definitiva para una operación 100% automatizada. <strong class="text-white">Desbloquea la Fase 3.</strong></p>
+                    <p class="text-sm text-gray-500 mb-4">(Total de mi trabajo: S/ 4,000) <br> <span
+                            class="text-yellow-400 font-bold">+ S/ 1,500 a BrainPOS</span></p>
+                    <p class="text-sm">La solución definitiva para una operación 100% automatizada. <strong
+                            class="text-white">Desbloquea la Fase 3.</strong></p>
                 </label>
             </div>
             <div class="step-navigation">
@@ -101,14 +123,19 @@
                 <button class="btn-primary next-btn">Siguiente ▶</button>
             </div>
         </section>
-        
+
         <section id="step-4" class="step">
-             <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 3: Módulo Delivery (Opcional)</h2>
-             <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">Al elegir la integración con POS, desbloquean la capacidad de lanzar su propio canal de delivery, eliminando comisiones de terceros y fidelizando a sus clientes.</p>
-             <div class="max-w-4xl mx-auto">
-                <label for="addon-delivery" class="addon-card p-8 flex flex-col sm:flex-row items-start sm:items-center sm:justify-between cursor-pointer">
+            <h2 class="font-gamer text-2xl md:text-3xl text-center mb-12 text-purple-400">Fase 3: Módulo Delivery
+                (Opcional)</h2>
+            <p class="text-center max-w-3xl mx-auto mb-12 text-gray-400">Al elegir la integración con POS, desbloquean
+                la capacidad de lanzar su propio canal de delivery, eliminando comisiones de terceros y fidelizando a
+                sus clientes.</p>
+            <div class="max-w-4xl mx-auto">
+                <label for="addon-delivery"
+                    class="addon-card p-8 flex flex-col sm:flex-row items-start sm:items-center sm:justify-between cursor-pointer">
                     <div class="flex items-center">
-                        <input type="checkbox" id="addon-delivery" class="custom-checkbox" data-price="2000" data-monthly-price="30">
+                        <input type="checkbox" id="addon-delivery" class="custom-checkbox" data-price="2000"
+                            data-monthly-price="30">
                         <div class="ml-4">
                             <h4 class="font-bold text-lg text-white">Activar Módulo de Delivery Propio</h4>
                             <ul class="text-sm text-gray-400 list-disc list-inside mt-2">
@@ -123,8 +150,8 @@
                         <p class="text-sm text-gray-500">pago único</p>
                     </div>
                 </label>
-             </div>
-             <div class="step-navigation">
+            </div>
+            <div class="step-navigation">
                 <button class="btn-secondary prev-btn">◀ Anterior</button>
                 <button class="btn-primary next-btn">Siguiente ▶</button>
             </div>
@@ -132,28 +159,31 @@
 
         <section id="step-5" class="step text-center">
             <h2 class="font-gamer text-2xl md:text-3xl mb-12 text-purple-400">Servicio y Soporte Mensual</h2>
-             <div class="card p-8 max-w-3xl mx-auto mb-12">
-                 <h3 class="font-gamer text-xl uppercase text-green-400">Servicio Gestionado</h3>
-                 <p class="font-bold text-5xl my-4">S/ 150 <span id="monthly-base-text" class="text-2xl text-gray-400">/ mes</span></p>
-                 <p class="text-gray-400">Este servicio asegura la tranquilidad total. Incluye:</p>
-                 <ul class="text-left space-y-2 text-sm mt-4 list-disc list-inside">
-                     <li>Hosting, seguridad y mantenimiento proactivo.</li>
-                     <li>**Acceso al Panel de Autogestión** para activar/desactivar platos del día.</li>
-                     <li>**Gestión de Contenido Asistida:** Si no quieren usar el panel, me envían un WhatsApp y yo actualizo el menú por ustedes (hasta 10 cambios mayores al mes).</li>
-                 </ul>
-             </div>
-             <h3 class="font-gamer text-xl text-center mb-4 text-purple-400">Tu Plan de Lanzamiento</h3>
-             <div id="final-summary" class="card p-8 max-w-4xl mx-auto text-left space-y-4 mb-12">
-             </div>
-             <div class="step-navigation">
+            <div class="card p-8 max-w-3xl mx-auto mb-12">
+                <h3 class="font-gamer text-xl uppercase text-green-400">Servicio Gestionado</h3>
+                <p class="font-bold text-5xl my-4">S/ 150 <span id="monthly-base-text" class="text-2xl text-gray-400">/
+                        mes</span></p>
+                <p class="text-gray-400">Este servicio asegura la tranquilidad total. Incluye:</p>
+                <ul class="text-left space-y-2 text-sm mt-4 list-disc list-inside">
+                    <li>Hosting, seguridad y mantenimiento proactivo.</li>
+                    <li><strong>Acceso al Panel de Autogestión</strong> para activar/desactivar platos del día.</li>
+                    <li><strong>Gestión de Contenido Asistida:</strong> Si no quieren usar el panel, me envían un
+                        WhatsApp y yo actualizo el menú por ustedes (hasta 10 cambios mayores al mes).</li>
+                </ul>
+            </div>
+            <h3 class="font-gamer text-xl text-center mb-4 text-purple-400">Tu Plan de Lanzamiento</h3>
+            <div id="final-summary" class="card p-8 max-w-4xl mx-auto text-left space-y-4 mb-12">
+            </div>
+            <div class="step-navigation">
                 <button class="btn-secondary prev-btn">◀ Anterior</button>
-                <a href="mailto:tucorreo@example.com?subject=Aceptación de Propuesta - Play Time-Resto Gamer" class="btn-primary font-gamer inline-block px-8 py-4 rounded-lg text-lg uppercase">
+                <a href="mailto:tucorreo@example.com?subject=Aceptación de Propuesta - Play Time-Resto Gamer"
+                    class="btn-primary font-gamer inline-block px-8 py-4 rounded-lg text-lg uppercase">
                     Aprobar y Empezar FASE 1
                 </a>
             </div>
         </section>
     </main>
-    
+
     <div id="summary-cart" class="summary-cart">
         <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between text-center sm:text-left">
             <div class="mb-2 sm:mb-0">
@@ -161,16 +191,17 @@
                 <p id="total-inicial" class="font-bold text-2xl text-green-400">S/ 600.00</p>
             </div>
             <div class="mb-2 sm:mb-0">
-                <p class="text-gray-400 text-sm">INVERSIÓN TOTAL (EST.)</p>
+                <p class="text-gray-400 text-sm">INVERSIÓN TOTAL ACUMULADA</p>
                 <p id="total-proyecto" class="font-bold text-2xl text-white">S/ 3,000.00</p>
             </div>
-             <div class="mb-2 sm:mb-0">
-                <p class="text-gray-400 text-sm">SERVICIO MENSUAL (EST.)</p>
+            <div class="mb-2 sm:mb-0">
+                <p class="text-gray-400 text-sm">SERVICIO MENSUAL</p>
                 <p id="total-mensual" class="font-bold text-2xl text-white">S/ 150.00</p>
             </div>
         </div>
     </div>
-    
+
     <script src="main.js"></script>
 </body>
+
 </html>
